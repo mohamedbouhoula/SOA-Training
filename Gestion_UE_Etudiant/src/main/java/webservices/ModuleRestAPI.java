@@ -19,7 +19,7 @@ public class ModuleRestAPI {
 
     @GET
     @Path("/list")
-    public Response.getAllModules(){
+    public Response.GetAll(){
        return Response.status(200).entity(moduleBusiness.getAllModules()).build();
 
     }
@@ -35,4 +35,22 @@ public class ModuleRestAPI {
             return Response.status(400).entity("error").build();
         }
     }
+    @GET
+    @Path("/{matricule}")
+    public Response getModule(@PathParam("matricule") String matricule) {
+        Module m = moduleBusiness.getModuleByMatricule(matricule);
+        if (m == null) {
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Module " + matricule + " introuvable").build();
+        }
+        return Response.ok(m).build();
+    }
+    @DELETE
+    @Path("/{matricule}")
+    public Response deleteModule(@PathParam("matricule") String matricule) {
+        if (moduleBusiness.deleteModule(matricule)) {
+            return Response.noContent().build(); // 204
+        }
+        return Response.status(Response.Status.NOT_FOUND)
+                .entity("Module " + matricule + " introuvable").build
 }
