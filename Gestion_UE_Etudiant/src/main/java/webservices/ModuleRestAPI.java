@@ -19,7 +19,7 @@ public class ModuleRestAPI {
 
     @GET
     @Path("/list")
-    public Response.GetAll(){
+    public Response.GetAllModules(){
        return Response.status(200).entity(moduleBusiness.getAllModules()).build();
 
     }
@@ -28,7 +28,7 @@ public class ModuleRestAPI {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
     public Response createModule(Module module){
-        if (helper.addModule(moduleBusiness)){
+        if (moduleBusiness.addModule(moduleBusiness)){
             return Response.status(201).entity("ok").build();
         }
         else {
